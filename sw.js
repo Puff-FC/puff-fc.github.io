@@ -1,6 +1,6 @@
 // Puff FC: modo sin conexión. La versión cambia en cada publicación.
 importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js"); // avisos (OneSignal)
-const V="puff-20261123-205307";
+const V="puff-20261123-205442";
 const BASE=["./","index.html","manifest.webmanifest","icons/icon-192.png","icons/icon-512.png","icons/icon-180.png","icons/icon-32.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(BASE)).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
