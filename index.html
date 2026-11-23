@@ -509,7 +509,7 @@ function vPortada(){
     ${CR_U?`<div class="cronica en-portada">${(CR_U.texto||[]).map(t=>`<p>${esc(t)}</p>`).join("")}${citaHTML(CR_U)}</div>`:""}
     ${ASI}
   </article>`}
-  ${NOT_J.map(x=>`<article class="caja puff o3 noticia-extra"><span class="sello">Puff FC</span><p class="antetitulo">Noticias de la semana${x.tema?" · "+esc(x.tema):""}</p>
+  ${NOT_J.map(x=>`<article class="caja puff o2 noticia-extra"><span class="sello">Puff FC</span><p class="antetitulo">Noticias de la semana${x.tema?" · "+esc(x.tema):""}</p>
     <h2>${esc(x.titular)}</h2>${(x.texto||[]).map(t=>`<p>${esc(t)}</p>`).join("")}${citaHTML(x)}</article>`).join("")}
   ${DESC?`<article class="caja puff o3"><span class="sello">Puff FC</span>${ASI}</article>`:""}
   <div class="grid g3 o4">
@@ -522,7 +522,7 @@ function vPortada(){
   </div>
   </div>
   <div class="col-der">
-    <div class="caja puff o2"><span class="sello">Puff FC</span>${DESCANSO_PROX?`<p class="nota" style="margin:0 0 8px">Jornada ${DESCANSO_PROX.jornada} (${fecha(DESCANSO_PROX.fecha)}): Puff descansa. Toca sofá.</p>`:""}${previaHTML(PROX,true)}</div>
+    <div class="caja puff o3"><span class="sello">Puff FC</span>${DESCANSO_PROX?`<p class="nota" style="margin:0 0 8px">Jornada ${DESCANSO_PROX.jornada} (${fecha(DESCANSO_PROX.fecha)}): Puff descansa. Toca sofá.</p>`:""}${previaHTML(PROX,true)}</div>
     <div class="o5">${ojoHTML()}</div>
     <div class="caja o6"><div class="sec-tit"><h2>Clasificación</h2><button class="chip" data-ir="liga">Completa</button></div>
       ${tablaLiga(TAB.slice(0,6),{mini:true})}</div>
