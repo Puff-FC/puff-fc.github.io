@@ -739,7 +739,14 @@ if(!enMarco&&"serviceWorker" in navigator&&location.protocol==="https:"){
     if(!OS.Notifications.isPushSupported())return;
     const dentro=()=>OS.User.PushSubscription.optedIn;
     let enlace=null;
-    const pedir=async()=>{try{await OS.Notifications.requestPermission()}catch(e){}pintar()};
+    const estado=t=>{let el=document.getElementById("avisos-estado");if(!el){el=document.createElement("p");el.id="avisos-estado";el.className="nota";pie.appendChild(el)}el.textContent=t};
+    /* El permiso se pide con la API del propio móvil, dentro del toque (iPhone lo exige), y luego se suscribe en OneSignal */
+    const pedir=async()=>{
+      let p="";try{p=await Notification.requestPermission()}catch(e){estado("Avisos: el móvil no deja pedir permiso ("+e.message+")");return}
+      if(p!=="granted"){estado("Avisos: permiso "+(p==="denied"?"denegado. Actívalo en Ajustes > Notificaciones > Puff FC":"no concedido"));pintar();return}
+      try{await OS.User.PushSubscription.optIn()}catch(e){estado("Avisos: error al suscribirse ("+e.message+")");return}
+      setTimeout(()=>{estado(dentro()?"Avisos activados. Ya te llegarán las notificaciones.":"Avisos: permiso dado, pero falta completar la suscripción. Cierra y abre la app.");pintar()},1500);
+    };
     function pintar(){
       const on=dentro(),neg=OS.Notifications.permissionNative==="denied";
       if(on||neg){caja.classList.remove("ver");if(enlace)enlace.remove();enlace=null;return}
