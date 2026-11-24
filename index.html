@@ -169,7 +169,17 @@ table.rank tr.lider td{font-weight:700}
 .cal-caja{margin-top:16px;padding:14px;border-radius:14px;background:#eef3fc}
 .cromos h2{margin-top:2px}
 .album{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;margin-top:14px}
-.cromo{aspect-ratio:5/7;border-radius:12px;border:1.5px dashed #b9c9e4;background:repeating-linear-gradient(135deg,#f5f8fd 0 10px,#eef3fb 10px 20px);display:flex;flex-direction:column;justify-content:flex-end;padding:8px;min-width:0}
+.album{grid-auto-flow:dense}
+.cromo{aspect-ratio:5/7;border-radius:12px;border:1.5px dashed #b9c9e4;background:repeating-linear-gradient(135deg,#f5f8fd 0 10px,#eef3fb 10px 20px);display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;text-align:left;padding:8px;min-width:0;color:var(--tinta);font:inherit;position:relative;transition:transform .15s}
+.cromo:active{transform:scale(.97)}
+.cromo.sel{grid-column:span 2;grid-row:span 2;border:2px solid var(--azul);background:linear-gradient(180deg,#eaf1fc,#fff);box-shadow:0 8px 24px rgba(11,79,174,.18);padding:12px}
+.cromo.sel .cromo-n{font-size:24px;letter-spacing:-.02em}
+.cromo.sel .cromo-pos{font-size:13px}
+.cromo-st{font-size:12.5px;color:var(--gris);margin-top:4px}
+.cromo-ins{position:absolute;top:6px;right:6px;font-size:13px;line-height:1;display:flex;gap:2px}
+.cromo.sel .cromo-ins{font-size:20px;top:10px;right:10px}
+.insignias{font-size:.8em;white-space:nowrap}
+.ins{margin-left:2px}
 .cromo-pos{font-size:11px;color:var(--gris)}
 .cromo-n{font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media (max-width:520px){.album{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}}
@@ -645,8 +655,8 @@ function vJugadores(){
   const val=(j,k)=>{const v=k==="n"?j.n:k==="pos"?j.pos:j.s[k];if(k==="gapp"||k==="gepp")return j.s.pj?fmt(v,2):"-";if(k==="p0"||k==="ge")return fmt(v,1);return v};
   if(!jugSel){const g=lider("ga");jugSel=g?g.quien[0]:JUG[0].n;}
   const cromos=`<div class="caja puff cromos"><span class="sello">Puff FC</span><p class="antetitulo">Cromos ${esc(A.temporada)}</p>
-   <h2>Los cromos de la plantilla están en la imprenta</h2><p class="nota" style="margin:6px 0 0">Muy pronto, el cromo de cada jugador. Ve haciendo hueco en el álbum.</p>
-   <div class="album">${JUG.map(x=>`<div class="cromo"><span class="cromo-pos">${esc(x.pos)}</span><span class="cromo-n">${esc(x.n)}</span></div>`).join("")}</div></div>`;
+   <h2>Los cromos de la plantilla están en la imprenta</h2><p class="nota" style="margin:6px 0 0">Muy pronto, el cromo de cada jugador. Mientras, toca uno para ver su ficha.</p>
+   <div class="album" role="group" aria-label="Elegir jugador">${JUG.map(x=>`<button class="cromo${x.n===jugSel?" sel":""}" data-jug="${esc(x.n)}" aria-pressed="${x.n===jugSel}"><span class="cromo-ins">${insHTML(x.n)}</span><span class="cromo-pos">${esc(x.pos)}</span><span class="cromo-n">${esc(x.n)}</span>${x.n===jugSel?`<span class="cromo-st">${x.s.pj} PJ · ${x.s.g} ${plural(x.s.g,"gol","goles")} · ${x.s.a} asist.</span>`:""}</button>`).join("")}</div><p class="nota" style="margin:10px 0 0">⚽ Máximo goleador · 🎯 Máximo asistente · 🧤 Menos goles encajados por partido · 🟨 Más tarjetas</p></div>`;
   return `${cromos}<div id="ficha-jug" style="margin-top:14px">${fichaJugador(jugSel)}</div>
    <details class="caja roja desplegable" id="det-tabla" style="margin-top:16px"><summary><h2>La plantilla en números</h2><span class="nota">Toca para ver la tabla de todos</span></summary>
    <p class="nota" style="margin:0 0 8px">Toca una columna para ordenar.</p>
@@ -654,16 +664,22 @@ function vJugadores(){
    <tbody>${L.map(j=>`<tr>${cols.map(([k])=>`<td class="${k==="n"?"izq":""}">${k==="n"?`<button class="chip" data-jug="${esc(j.n)}" aria-pressed="${j.n===jugSel}" style="padding:2px 9px">${esc(j.n)}</button>`:esc(val(j,k))}</td>`).join("")}</tr>`).join("")}</tbody></table></div>
    <p class="nota">GE: goles encajados con el jugador en pista. A los porteros solo se les cuentan los de sus partes, y GE/PJ es por partido completo en portería.</p></details>`;
 }
+/* Insignias del jugador: líderes del equipo (empates incluidos) */
+function insignias(n){
+  const L=[];const top=(f,menor)=>{const v=JUG.map(f).filter(x=>x!=null&&(menor||x>0));if(!v.length)return null;return menor?Math.min(...v):Math.max(...v)};
+  const j=JUG.find(x=>x.n===n);if(!j)return L;
+  const g=top(x=>x.s.g),a=top(x=>x.s.a),t=top(x=>x.s.ta+x.s.tr),ge=top(x=>x.s.pj>=2?x.s.gepp:null,true);
+  if(g!=null&&j.s.g===g)L.push(["⚽","Máximo goleador"]);
+  if(a!=null&&j.s.a===a)L.push(["🎯","Máximo asistente"]);
+  if(ge!=null&&j.s.pj>=2&&j.s.gepp===ge)L.push(["🧤","Menos goles encajados por partido"]);
+  if(t!=null&&j.s.ta+j.s.tr===t)L.push(["🟨","Más tarjetas"]);
+  return L;
+}
+const insHTML=n=>insignias(n).map(([e,l])=>`<span class="ins" role="img" aria-label="${l}" title="${l}">${e}</span>`).join("");
 function fichaJugador(n){
   const j=JUG.find(x=>x.n===n);if(!j)return "";
   const s=j.s,p=j.prev,cs=conSin(n,A.liga,A.jugadores);
   const nuevo=!p;
-  let titulo;
-  if(esPortero(j))titulo=s.partes?`${n}: ${fmt(s.partes)} partidos bajo palos y ${fmt(s.ge)} goles encajados`:`${n} todavía no ha pisado la portería esta temporada`;
-  else if(s.ga>=4)titulo=`${n} está on fire: ${s.g} goles y ${s.a} asistencias en ${s.pj} partidos`;
-  else if(s.ga>0)titulo=`${n} suma ${s.ga} ${plural(s.ga,"participación","participaciones")} de gol en ${s.pj} ${plural(s.pj,"partido","partidos")}`;
-  else if(s.pj>0)titulo=`${n} se deja la piel aunque el gol se le resista (${s.pj} ${plural(s.pj,"partido","partidos")})`;
-  else titulo=`${n} aún no se ha estrenado esta temporada`;
   const comp=p?`<h3 style="margin-top:18px">Frente a su temporada 25/26</h3>
     <div class="tabla-wrap"><table><thead><tr><th class="izq">Por partido</th><th>26/27</th><th>25/26</th><th>Cambio</th></tr></thead><tbody>
     ${[["Goles","gpp",false],["Asistencias","app",false],["G+A","gapp",false],["Goles encajados","gepp",true]].map(([l,k,inv])=>{const a=s.pj?s[k]:null,b=p[k];const d=a==null||b==null?null:a-b;
@@ -673,8 +689,7 @@ function fichaJugador(n){
   const log=j.rows.slice().sort((a,b)=>a.jornada-b.jornada).map(r=>{const pt=PUFF_PS.find(x=>x.j===r.jornada);
     return `<div class="pt"><span class="j">J${r.jornada}</span><span class="vs">${pt?"vs "+"<b>"+esc(corto(pt.rival))+"</b> "+pt.gf+"-"+pt.gc:""}</span><span class="sc" style="font-weight:400">${[r.goles?r.goles+" "+plural(r.goles,"gol","goles"):"",r.asistencias?r.asistencias+" "+plural(r.asistencias,"asist.","asist."):"",r.partes_porteria?"portería "+fmt(r.partes_porteria)+(r.partes_porteria<1?" (una parte)":""):""].filter(Boolean).join(" · ")||"<span class='nota'>en pista</span>"}</span></div>`}).join("");
   return `<div class="grid g2"><div class="caja roja">
-   <div class="chips" role="group" aria-label="Elegir jugador">${JUG.map(x=>`<button class="chip" data-jug="${esc(x.n)}" aria-pressed="${x.n===n}">${esc(x.n)}</button>`).join("")}</div>
-   <p class="antetitulo">${esc(j.pos)}${nuevo?" · Fichaje":""}</p><h2>${esc(titulo)}</h2>
+   <p class="antetitulo">${esc(j.pos)}${nuevo?" · Fichaje":""}</p><h2>${esc(n)}${insignias(n).length?` <span class="insignias">${insHTML(n)}</span>`:""}</h2>
    <div class="cifras" style="margin-top:14px">
      ${esPortero(j)?cifra(fmt(s.gepp==null?null:s.gepp,2),"goles encajados por partido",p&&s.pj?deltaTxt(s.gepp,p.gepp,2,true):"")+cifra(fmt(s.p0,1),"porterías a cero"):cifra(s.g,"goles",p&&s.pj?deltaTxt(s.gpp,p.gpp,2,false,"por partido vs 25/26"):"")+cifra(s.a,"asistencias",p&&s.pj?deltaTxt(s.app,p.app,2,false,"por partido vs 25/26"):"")}
      ${cifra(s.pj+" / "+PUFF_PS.length,"partidos jugados")}${cifra(s.mvp,"MVP")}
@@ -780,7 +795,7 @@ document.addEventListener("click",e=>{
   if(b.dataset.portada){pintarPortada(+b.dataset.portada);return}
   if(b.dataset.rival){M.setRival(b.dataset.rival);if(hechas.rivales){document.getElementById("v-rivales").innerHTML=M.vRivales()}ir("rivales");return}
   if(b.dataset.jug&&b.closest("#v-puff")){M.setJug(b.dataset.jug);delete hechas.jugadores;ir("jugadores");return}
-  if(b.dataset.jug){M.setJug(b.dataset.jug);rehacerJug();document.getElementById("ficha-jug").scrollIntoView({block:"start",behavior:"smooth"});return}
+  if(b.dataset.jug){const enAlbum=b.classList.contains("cromo");M.setJug(b.dataset.jug);rehacerJug();const s=document.querySelector(enAlbum?".cromo.sel":"#ficha-jug");if(s)s.scrollIntoView({block:enAlbum?"nearest":"start",behavior:"smooth"});return}
   if(b.dataset.orden){M.orden(b.dataset.orden);rehacerJug();return}
   if(b.dataset.jornada){document.querySelectorAll("[data-jornada]").forEach(x=>x.setAttribute("aria-pressed",x===b));document.getElementById("jornada-det").innerHTML=M.jornadaHTML(+b.dataset.jornada);return}
 });
