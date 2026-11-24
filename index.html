@@ -164,6 +164,9 @@ svg text{font-family:var(--f-texto);fill:var(--gris);font-size:11px}
 .graf{width:100%;display:block}
 .btn{background:var(--azul);color:#fff;border:0;border-radius:3px;padding:10px 16px;font-family:var(--f-titular);text-transform:uppercase;font-weight:600;letter-spacing:.4px}
 .btn.sec{background:var(--tinta)}
+.cal-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:14px}
+.cal-links .btn{text-decoration:none;display:inline-block}
+.cal-links a:not(.btn){font-weight:600}
 .btn:hover{background:var(--azul-osc)}
 .datos{margin:12px 0 0;display:grid}
 .datos .fila{display:grid;grid-template-columns:minmax(110px,38%) minmax(0,1fr);gap:12px;padding:8px 0;border-bottom:1px solid var(--linea);align-items:baseline}
@@ -559,7 +562,9 @@ function vPuff(){
   <div class="grid g2" style="margin-top:16px">
    ${CRON.length?`<div style="grid-column:1/-1" class="grid">${CRON.slice().reverse().map(c=>cronicaHTML(c,false)).join("")}</div>`:""}
    <div class="caja"><div class="sec-tit"><h2>Resultados</h2></div><div class="partidos">${PUFF_PS.slice().reverse().map(p=>filaPartido(p)).join("")}</div></div>
-   <div class="caja"><div class="sec-tit"><h2>Lo que queda</h2><span class="nota">puesto actual del rival</span></div><div class="partidos">${cal}</div></div>
+   <div class="caja"><div class="sec-tit"><h2>Lo que queda</h2><span class="nota">puesto actual del rival</span></div><div class="partidos">${cal}</div>
+    <div class="cal-links"><a class="btn" href="webcal://puff-fc.github.io/puff.ics" target="_blank" rel="noopener">Añadir al calendario</a><a href="https://puff-fc.github.io/puff.ics" target="_blank" rel="noopener" download="puff.ics">o descárgalo</a></div>
+    <p class="nota" style="margin:6px 0 0">Todos los partidos de Puff en tu calendario. Si cambia una fecha, se actualiza solo.</p></div>
   </div>`;
 }
 

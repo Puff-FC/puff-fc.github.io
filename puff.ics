@@ -1,0 +1,247 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Puff FC//Diario Puff//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Puff FC 2026/27
+X-WR-TIMEZONE:Europe/Madrid
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VTIMEZONE
+TZID:Europe/Madrid
+BEGIN:DAYLIGHT
+TZOFFSETFROM:+0100
+TZOFFSETTO:+0200
+TZNAME:CEST
+DTSTART:19700329T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:+0200
+TZOFFSETTO:+0100
+TZNAME:CET
+DTSTART:19701025T030000
+RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:puff-202627-j1@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20261018T190000
+DTEND;TZID=Europe/Madrid:20261018T200000
+SUMMARY:Puff FC 2-1 La Colonia Huertaña
+LOCATION:Pista exterior Techada Futbol Sala Moratalaz
+DESCRIPTION:Jornada 1 de la liga de fútbol sala de Moratalaz. Toda la info
+  en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j2@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20261025T160000
+DTEND;TZID=Europe/Madrid:20261025T170000
+SUMMARY:Puff FC 6-1 La Vida en Rosa
+LOCATION:CDM La Elipa Pista exterior
+DESCRIPTION:Jornada 2 de la liga de fútbol sala de Moratalaz. Toda la info
+  en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j3@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20261108T150000
+DTEND;TZID=Europe/Madrid:20261108T160000
+SUMMARY:Puff FC 4-3 Mejiyouns
+LOCATION:Fútbol sala 5 exterior techada Palomeras
+DESCRIPTION:Jornada 3 de la liga de fútbol sala de Moratalaz. Toda la info
+  en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j5@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20261122T150000
+DTEND;TZID=Europe/Madrid:20261122T160000
+SUMMARY:Puff FC 2-2 Taifa ABC
+LOCATION:Pista exterior Techada Futbol Sala Moratalaz
+DESCRIPTION:Jornada 5 de la liga de fútbol sala de Moratalaz. Toda la info
+  en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j6@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20261129T160000
+DTEND;TZID=Europe/Madrid:20261129T170000
+SUMMARY:Puff FC vs Liatrancas
+LOCATION:CDM La Elipa Pista exterior
+DESCRIPTION:Jornada 6 de la liga de fútbol sala de Moratalaz. Toda la info
+  en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j7@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20261213T190000
+DTEND;TZID=Europe/Madrid:20261213T200000
+SUMMARY:Puff FC vs Xymaho
+LOCATION:Pista exterior Techada Futbol Sala Moratalaz
+DESCRIPTION:Jornada 7 de la liga de fútbol sala de Moratalaz. Toda la info
+  en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j8@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20261220T170000
+DTEND;TZID=Europe/Madrid:20261220T180000
+SUMMARY:Puff FC vs Birras y Rosas
+LOCATION:Pista exterior Techada Futbol Sala Moratalaz
+DESCRIPTION:Jornada 8 de la liga de fútbol sala de Moratalaz. Toda la info
+  en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j9@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20270110T180000
+DTEND;TZID=Europe/Madrid:20270110T190000
+SUMMARY:Puff FC vs Borrachester
+LOCATION:CDM La Elipa Pista exterior
+DESCRIPTION:Jornada 9 de la liga de fútbol sala de Moratalaz. Toda la info
+  en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j10@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20270117T180000
+DTEND;TZID=Europe/Madrid:20270117T190000
+SUMMARY:Puff FC vs C. Santos
+LOCATION:CDM La Elipa Pista exterior
+DESCRIPTION:Jornada 10 de la liga de fútbol sala de Moratalaz. Toda la inf
+ o en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j11@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20270124T170000
+DTEND;TZID=Europe/Madrid:20270124T180000
+SUMMARY:Puff FC vs Fresquitos
+LOCATION:Pista exterior Techada Futbol Sala Moratalaz
+DESCRIPTION:Jornada 11 de la liga de fútbol sala de Moratalaz. Toda la inf
+ o en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j12@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20270131T190000
+DTEND;TZID=Europe/Madrid:20270131T200000
+SUMMARY:Puff FC vs La Colonia Huertaña
+LOCATION:Pista exterior Techada Futbol Sala Moratalaz
+DESCRIPTION:Jornada 12 de la liga de fútbol sala de Moratalaz. Toda la inf
+ o en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j13@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20270207T160000
+DTEND;TZID=Europe/Madrid:20270207T170000
+SUMMARY:Puff FC vs La Vida en Rosa
+LOCATION:CDM La Elipa Pista exterior
+DESCRIPTION:Jornada 13 de la liga de fútbol sala de Moratalaz. Toda la inf
+ o en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j14@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20270221T150000
+DTEND;TZID=Europe/Madrid:20270221T160000
+SUMMARY:Puff FC vs Mejiyouns
+LOCATION:Pista exterior Techada Futbol Sala Moratalaz
+DESCRIPTION:Jornada 14 de la liga de fútbol sala de Moratalaz. Toda la inf
+ o en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j16@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20270307T150000
+DTEND;TZID=Europe/Madrid:20270307T160000
+SUMMARY:Puff FC vs Taifa ABC
+LOCATION:Pista exterior Techada Futbol Sala Moratalaz
+DESCRIPTION:Jornada 16 de la liga de fútbol sala de Moratalaz. Toda la inf
+ o en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j17@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20270314T160000
+DTEND;TZID=Europe/Madrid:20270314T170000
+SUMMARY:Puff FC vs Liatrancas
+LOCATION:CDM La Elipa Pista exterior
+DESCRIPTION:Jornada 17 de la liga de fútbol sala de Moratalaz. Toda la inf
+ o en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j18@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20270404T190000
+DTEND;TZID=Europe/Madrid:20270404T200000
+SUMMARY:Puff FC vs Xymaho
+LOCATION:Pista exterior Techada Futbol Sala Moratalaz
+DESCRIPTION:Jornada 18 de la liga de fútbol sala de Moratalaz. Toda la inf
+ o en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j19@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20270411T170000
+DTEND;TZID=Europe/Madrid:20270411T180000
+SUMMARY:Puff FC vs Birras y Rosas
+LOCATION:Pista exterior Techada Futbol Sala Moratalaz
+DESCRIPTION:Jornada 19 de la liga de fútbol sala de Moratalaz. Toda la inf
+ o en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j20@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20270418T180000
+DTEND;TZID=Europe/Madrid:20270418T190000
+SUMMARY:Puff FC vs Borrachester
+LOCATION:CDM La Elipa Pista exterior
+DESCRIPTION:Jornada 20 de la liga de fútbol sala de Moratalaz. Toda la inf
+ o en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j21@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20270425T180000
+DTEND;TZID=Europe/Madrid:20270425T190000
+SUMMARY:Puff FC vs C. Santos
+LOCATION:CDM La Elipa Pista exterior
+DESCRIPTION:Jornada 21 de la liga de fútbol sala de Moratalaz. Toda la inf
+ o en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+BEGIN:VEVENT
+UID:puff-202627-j22@puff-fc.github.io
+DTSTAMP:20261124T112243Z
+DTSTART;TZID=Europe/Madrid:20270509T170000
+DTEND;TZID=Europe/Madrid:20270509T180000
+SUMMARY:Puff FC vs Fresquitos
+LOCATION:Pista exterior Techada Futbol Sala Moratalaz
+DESCRIPTION:Jornada 22 de la liga de fútbol sala de Moratalaz. Toda la inf
+ o en https://puff-fc.github.io
+URL:https://puff-fc.github.io
+END:VEVENT
+END:VCALENDAR
