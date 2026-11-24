@@ -581,8 +581,8 @@ function vJugadores(){
   const MINPJ=2;
   const por=JUG.filter(j=>j.s.pj>=MINPJ&&j.s.gepp!=null).sort((a,b)=>a.s.gepp-b.s.gepp||b.s.pj-a.s.pj||a.n.localeCompare(b.n)).slice(0,5);
   const ranking=`<div class="grid g3" style="margin-bottom:16px">
-   <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Máximos goleadores</p>${rank(gol,[["Goles",j=>j.s.g],["PJ",j=>j.s.pj]],"Sin goles todavía.")}</div>
-   <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Máximos asistentes</p>${rank(asi,[["Asist.",j=>j.s.a],["PJ",j=>j.s.pj]],"Sin asistencias todavía.")}</div>
+   <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Máximos goleadores</p>${rank(gol,[["Goles",j=>j.s.g],["PJ",j=>j.s.pj],["G/PJ",j=>fmt(j.s.gpp,2)]],"Sin goles todavía.")}</div>
+   <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Máximos asistentes</p>${rank(asi,[["Asist.",j=>j.s.a],["PJ",j=>j.s.pj],["A/PJ",j=>fmt(j.s.app,2)]],"Sin asistencias todavía.")}</div>
    <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Menos goles encajados por partido</p>${rank(por,[["GE/PJ",j=>fmt(j.s.gepp,2)],["PJ",j=>j.s.pj],["GE",j=>fmt(j.s.ge)]],"Sin datos todavía.")}<p class="nota" style="margin:8px 0 0">Goles que entran con el jugador en pista, menos es mejor. Mínimo ${MINPJ} partidos. A los porteros solo se les cuentan los de sus partes y el ratio va por partido completo en portería.</p></div>
   </div>`;
   return `${ranking}<div id="ficha-jug">${fichaJugador(jugSel)}</div>
