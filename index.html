@@ -738,7 +738,10 @@ if(!enMarco&&"serviceWorker" in navigator&&location.protocol==="https:"){
     const estado=t=>{let el=document.getElementById("avisos-estado");if(!el){el=document.createElement("p");el.id="avisos-estado";el.className="nota";pie.appendChild(el)}el.textContent=t};
     try{await OS.init({appId:APP,safari_web_id:"web.onesignal.auto.3145fc89-5d6b-4727-99ef-e9ab80472582",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{autoPrompt:false}})}catch(e){estado("Avisos: error al arrancar ("+(e&&e.message||e)+")");return}
     if(!OS.Notifications.isPushSupported()){const st=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone;estado(st?"Avisos: este móvil no los admite (en iPhone hace falta iOS 16.4 o más)":"Avisos: abre la app desde el icono de la pantalla de inicio para activarlos");return}
-    if(OS.User.PushSubscription.optedIn)estado("Avisos activados en este móvil.");
+    const idc=()=>{const i=OS.User.PushSubscription.id;return i?" (ref. "+i.slice(0,8)+")":" (sin registrar en el servidor)"};
+    /* Si el móvil ya dio permiso pero la suscripción no llegó al servidor, se reintenta sola al abrir */
+    try{if(window.Notification&&Notification.permission==="granted"&&!OS.User.PushSubscription.id){await OS.User.PushSubscription.optIn()}}catch(e){estado("Avisos: error al registrar ("+(e&&e.message||e)+")")}
+    setTimeout(()=>{if(OS.User.PushSubscription.optedIn)estado("Avisos activados en este móvil"+idc()+".")},3000);
     const dentro=()=>OS.User.PushSubscription.optedIn;
     let enlace=null;
     /* El permiso se pide con la API del propio móvil, dentro del toque (iPhone lo exige), y luego se suscribe en OneSignal */
@@ -746,7 +749,7 @@ if(!enMarco&&"serviceWorker" in navigator&&location.protocol==="https:"){
       let p="";try{p=await Notification.requestPermission()}catch(e){estado("Avisos: el móvil no deja pedir permiso ("+e.message+")");return}
       if(p!=="granted"){estado("Avisos: permiso "+(p==="denied"?"denegado. Actívalo en Ajustes > Notificaciones > Puff FC":"no concedido"));pintar();return}
       try{await OS.User.PushSubscription.optIn()}catch(e){estado("Avisos: error al suscribirse ("+e.message+")");return}
-      setTimeout(()=>{estado(dentro()?"Avisos activados. Ya te llegarán las notificaciones.":"Avisos: permiso dado, pero falta completar la suscripción. Cierra y abre la app.");pintar()},1500);
+      setTimeout(()=>{estado(dentro()?"Avisos activados"+idc()+". Ya te llegarán las notificaciones.":"Avisos: permiso dado, pero falta completar la suscripción. Cierra y abre la app.");pintar()},3000);
     };
     function pintar(){
       const on=dentro(),neg=OS.Notifications.permissionNative==="denied";
