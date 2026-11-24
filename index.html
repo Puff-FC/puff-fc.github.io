@@ -166,6 +166,13 @@ svg text{font-family:var(--f-texto);fill:var(--gris);font-size:11px}
 .btn.sec{background:var(--tinta)}
 table.rank td.pos{width:28px}
 table.rank tr.lider td{font-weight:700}
+.cal-caja{margin-top:16px;padding:14px;border-radius:14px;background:#eef3fc}
+.cromos h2{margin-top:2px}
+.album{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;margin-top:14px}
+.cromo{aspect-ratio:5/7;border-radius:12px;border:1.5px dashed #b9c9e4;background:repeating-linear-gradient(135deg,#f5f8fd 0 10px,#eef3fb 10px 20px);display:flex;flex-direction:column;justify-content:flex-end;padding:8px;min-width:0}
+.cromo-pos{font-size:11px;color:var(--gris)}
+.cromo-n{font-weight:700;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:520px){.album{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}}
 .cal-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:14px}
 .cal-links .btn{text-decoration:none;display:inline-block}
 .cal-links a:not(.btn){font-weight:600}
@@ -588,12 +595,23 @@ function vPortada(){
   </div>`;
 }
 
+function rankingHTML(){
+  const rank=(L,cols,vacio)=>L.length?`<div class="tabla-wrap"><table class="rank"><thead><tr><th>#</th><th class="izq">Jugador</th>${cols.map(c=>`<th>${c[0]}</th>`).join("")}</tr></thead><tbody>${L.map((j,i)=>`<tr class="${cols[0][1](j)===cols[0][1](L[0])?"lider":""}"><td class="pos">${i>0&&cols[0][1](j)===cols[0][1](L[i-1])?"":i+1}</td><td class="izq"><button class="chip" data-jug="${esc(j.n)}" style="padding:2px 9px">${esc(j.n)}</button></td>${cols.map(c=>`<td>${c[1](j)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`:`<p class="nota">${vacio}</p>`;
+  const top=(k,f)=>JUG.filter(j=>j.s[k]>0&&(!f||f(j))).sort((a,b)=>b.s[k]-a.s[k]||a.s.pj-b.s.pj||a.n.localeCompare(b.n)).slice(0,5);
+  const gol=top("g"),asi=top("a");
+  const MINPJ=2;
+  const por=JUG.filter(j=>j.s.pj>=MINPJ&&j.s.gepp!=null).sort((a,b)=>a.s.gepp-b.s.gepp||b.s.pj-a.s.pj||a.n.localeCompare(b.n)).slice(0,5);
+  const ranking=`<div class="grid g3" style="margin-bottom:16px">
+   <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Máximos goleadores</p>${rank(gol,[["Goles",j=>j.s.g],["PJ",j=>j.s.pj],["G/PJ",j=>fmt(j.s.gpp,2)]],"Sin goles todavía.")}</div>
+   <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Máximos asistentes</p>${rank(asi,[["Asist.",j=>j.s.a],["PJ",j=>j.s.pj],["A/PJ",j=>fmt(j.s.app,2)]],"Sin asistencias todavía.")}</div>
+   <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Menos goles encajados por partido</p>${rank(por,[["GE/PJ",j=>fmt(j.s.gepp,2)],["PJ",j=>j.s.pj],["GE",j=>fmt(j.s.ge)]],"Sin datos todavía.")}<p class="nota" style="margin:8px 0 0">Goles que entran con el jugador en pista, menos es mejor. Mínimo ${MINPJ} partidos. A los porteros solo se les cuentan los de sus partes y el ratio va por partido completo en portería.</p></div>
+  </div>`;
+  return ranking;
+}
 function vPuff(){
   const b=balance(PUFF_PS), casa=balance(PUFF_PS.filter(p=>p.casa)), fuera=balance(PUFF_PS.filter(p=>!p.casa)), t5=vsTop5(PUFF), resto=vsResto(PUFF);
   const prevB=balance(PUFF_PREV);
   const fil=(l,x)=>`<tr><td class="izq">${l}</td><td>${x.pj}</td><td>${x.v}</td><td>${x.e}</td><td>${x.d}</td><td>${x.gf}</td><td>${x.gc}</td><td><b>${x.pj?fmt(x.ppp,2):"-"}</b></td></tr>`;
-  const cal=proxPuff.map(m=>{if(m.visitante==="DESCANSA")return `<div class="pt"><span class="j">J${m.jornada}</span><span class="vs nota">Descansa · ${fecha(m.fecha)}</span><span></span></div>`;
-    const c=m.local===PUFF,r=c?m.visitante:m.local;return `<div class="pt"><span class="j">J${m.jornada}</span><span class="vs">vs <button class="chip" data-rival="${esc(r)}" style="padding:1px 8px">${esc(corto(r))}</button> <span class="nota">${fechaLarga(m.fecha)} ${esc(m.hora)}</span></span><span class="sc pendiente">${posDe(r)}º</span></div>`}).join("");
   return `<div class="grid g2">
    <div class="caja roja"><p class="antetitulo">Puff FC · ${esc(A.temporada)}</p><h2>${posDe(PUFF)}º con ${b.pts} puntos y ${b.gf} goles a favor</h2>
      <div class="cifras" style="margin-top:14px">
@@ -609,15 +627,13 @@ function vPuff(){
     <p class="nota">Top 5 según la clasificación actual: ${esc(TOP5.filter(t=>t!==PUFF).map(corto).join(", "))}.</p>
    </div>
   </div>
-  <div class="grid g2" style="margin-top:16px">
+  <div style="margin-top:16px">${rankingHTML()}</div>
+  <div class="grid g2">
    <div class="caja"><div class="sec-tit"><h2>Puesto jornada a jornada</h2></div>${grafPosicion()}</div>
    <div class="caja"><div class="sec-tit"><h2>Goles por partido</h2></div>${grafGoles(PUFF_PS)}</div>
   </div>
-  <div class="grid g2" style="margin-top:16px">
+  <div class="grid" style="margin-top:16px">
    <div class="caja"><div class="sec-tit"><h2>Resultados</h2></div><div class="partidos">${PUFF_PS.slice().reverse().map(p=>filaPartido(p)).join("")}</div></div>
-   <div class="caja"><div class="sec-tit"><h2>Lo que queda</h2><span class="nota">puesto actual del rival</span></div><div class="partidos">${cal}</div>
-    <div class="cal-links"><a class="btn" href="webcal://puff-fc.github.io/puff.ics" target="_blank" rel="noopener">Añadir al calendario</a><a href="https://puff-fc.github.io/puff.ics" target="_blank" rel="noopener">o descárgalo</a></div>
-    <p class="nota" style="margin:6px 0 0">Todos los partidos de Puff en tu calendario. Si cambia una fecha, se actualiza solo.</p></div>
   </div>`;
 }
 
@@ -628,17 +644,10 @@ function vJugadores(){
     if(typeof a==="string")return ordenJug.dir*a.localeCompare(b);return ordenJug.dir*(((a==null?-1:a))-((b==null?-1:b)))||x.n.localeCompare(y.n)});
   const val=(j,k)=>{const v=k==="n"?j.n:k==="pos"?j.pos:j.s[k];if(k==="gapp"||k==="gepp")return j.s.pj?fmt(v,2):"-";if(k==="p0"||k==="ge")return fmt(v,1);return v};
   if(!jugSel){const g=lider("ga");jugSel=g?g.quien[0]:JUG[0].n;}
-  const rank=(L,cols,vacio)=>L.length?`<div class="tabla-wrap"><table class="rank"><thead><tr><th>#</th><th class="izq">Jugador</th>${cols.map(c=>`<th>${c[0]}</th>`).join("")}</tr></thead><tbody>${L.map((j,i)=>`<tr class="${cols[0][1](j)===cols[0][1](L[0])?"lider":""}"><td class="pos">${i>0&&cols[0][1](j)===cols[0][1](L[i-1])?"":i+1}</td><td class="izq"><button class="chip" data-jug="${esc(j.n)}" style="padding:2px 9px">${esc(j.n)}</button></td>${cols.map(c=>`<td>${c[1](j)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`:`<p class="nota">${vacio}</p>`;
-  const top=(k,f)=>JUG.filter(j=>j.s[k]>0&&(!f||f(j))).sort((a,b)=>b.s[k]-a.s[k]||a.s.pj-b.s.pj||a.n.localeCompare(b.n)).slice(0,5);
-  const gol=top("g"),asi=top("a");
-  const MINPJ=2;
-  const por=JUG.filter(j=>j.s.pj>=MINPJ&&j.s.gepp!=null).sort((a,b)=>a.s.gepp-b.s.gepp||b.s.pj-a.s.pj||a.n.localeCompare(b.n)).slice(0,5);
-  const ranking=`<div class="grid g3" style="margin-bottom:16px">
-   <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Máximos goleadores</p>${rank(gol,[["Goles",j=>j.s.g],["PJ",j=>j.s.pj],["G/PJ",j=>fmt(j.s.gpp,2)]],"Sin goles todavía.")}</div>
-   <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Máximos asistentes</p>${rank(asi,[["Asist.",j=>j.s.a],["PJ",j=>j.s.pj],["A/PJ",j=>fmt(j.s.app,2)]],"Sin asistencias todavía.")}</div>
-   <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Menos goles encajados por partido</p>${rank(por,[["GE/PJ",j=>fmt(j.s.gepp,2)],["PJ",j=>j.s.pj],["GE",j=>fmt(j.s.ge)]],"Sin datos todavía.")}<p class="nota" style="margin:8px 0 0">Goles que entran con el jugador en pista, menos es mejor. Mínimo ${MINPJ} partidos. A los porteros solo se les cuentan los de sus partes y el ratio va por partido completo en portería.</p></div>
-  </div>`;
-  return `${ranking}<div id="ficha-jug">${fichaJugador(jugSel)}</div>
+  const cromos=`<div class="caja puff cromos"><span class="sello">Puff FC</span><p class="antetitulo">Cromos ${esc(A.temporada)}</p>
+   <h2>Los cromos de la plantilla están en la imprenta</h2><p class="nota" style="margin:6px 0 0">Muy pronto, el cromo de cada jugador. Ve haciendo hueco en el álbum.</p>
+   <div class="album">${JUG.map(x=>`<div class="cromo"><span class="cromo-pos">${esc(x.pos)}</span><span class="cromo-n">${esc(x.n)}</span></div>`).join("")}</div></div>`;
+  return `${cromos}<div id="ficha-jug" style="margin-top:14px">${fichaJugador(jugSel)}</div>
    <details class="caja roja desplegable" id="det-tabla" style="margin-top:16px"><summary><h2>La plantilla en números</h2><span class="nota">Toca para ver la tabla de todos</span></summary>
    <p class="nota" style="margin:0 0 8px">Toca una columna para ordenar.</p>
    <div class="tabla-wrap"><table id="tabla-jug"><thead><tr>${cols.map(([k,l])=>`<th class="${k==="n"?"izq":""}"><button data-orden="${k}" ${ordenJug.k===k?`aria-sort="${ordenJug.dir<0?"descending":"ascending"}"`:""}>${l}${ordenJug.k===k?(ordenJug.dir<0?" ▼":" ▲"):""}</button></th>`).join("")}</tr></thead>
@@ -685,7 +694,11 @@ function vLiga(){
    <p class="nota">Desempate por puntos, diferencia de goles y goles a favor. La web oficial desempata por otros criterios, así que en empates a puntos el orden puede variar.</p></div>
    <div class="caja"><div class="sec-tit"><h2>Jornadas</h2></div>
     <div class="chips" role="group" aria-label="Elegir jornada">${js.map(j=>`<button class="chip" data-jornada="${j}" aria-pressed="${j===ULT_J}" style="padding:3px 9px">${j}</button>`).join("")}</div>
-    <div id="jornada-det">${jornadaHTML(ULT_J)}</div></div></div>`;
+    <div id="jornada-det">${jornadaHTML(ULT_J)}</div>
+    <div class="cal-caja"><h3>Los partidos de Puff, en tu calendario</h3>
+     <p class="nota" style="margin:4px 0 0">Solo se añaden los partidos de Puff FC, no los de toda la liga. Si cambia una fecha o una hora, se actualiza solo.</p>
+     <div class="cal-links"><a class="btn" href="webcal://puff-fc.github.io/puff.ics" target="_blank" rel="noopener">Añadir al calendario</a><a href="https://puff-fc.github.io/puff.ics" target="_blank" rel="noopener">o descárgalo</a></div></div>
+    </div></div>`;
 }
 function jornadaHTML(j){
   const ms=A.liga.filter(m=>m.jornada===j);
@@ -766,6 +779,7 @@ document.addEventListener("click",e=>{
   if(b.dataset.ir){ir(b.dataset.ir);return}
   if(b.dataset.portada){pintarPortada(+b.dataset.portada);return}
   if(b.dataset.rival){M.setRival(b.dataset.rival);if(hechas.rivales){document.getElementById("v-rivales").innerHTML=M.vRivales()}ir("rivales");return}
+  if(b.dataset.jug&&b.closest("#v-puff")){M.setJug(b.dataset.jug);delete hechas.jugadores;ir("jugadores");return}
   if(b.dataset.jug){M.setJug(b.dataset.jug);rehacerJug();document.getElementById("ficha-jug").scrollIntoView({block:"start",behavior:"smooth"});return}
   if(b.dataset.orden){M.orden(b.dataset.orden);rehacerJug();return}
   if(b.dataset.jornada){document.querySelectorAll("[data-jornada]").forEach(x=>x.setAttribute("aria-pressed",x===b));document.getElementById("jornada-det").innerHTML=M.jornadaHTML(+b.dataset.jornada);return}
