@@ -563,7 +563,7 @@ function vPuff(){
    ${CRON.length?`<div style="grid-column:1/-1" class="grid">${CRON.slice().reverse().map(c=>cronicaHTML(c,false)).join("")}</div>`:""}
    <div class="caja"><div class="sec-tit"><h2>Resultados</h2></div><div class="partidos">${PUFF_PS.slice().reverse().map(p=>filaPartido(p)).join("")}</div></div>
    <div class="caja"><div class="sec-tit"><h2>Lo que queda</h2><span class="nota">puesto actual del rival</span></div><div class="partidos">${cal}</div>
-    <div class="cal-links"><a class="btn" href="webcal://puff-fc.github.io/puff.ics" target="_blank" rel="noopener">Añadir al calendario</a><a href="https://puff-fc.github.io/puff.ics" target="_blank" rel="noopener" download="puff.ics">o descárgalo</a></div>
+    <div class="cal-links"><a class="btn" href="webcal://puff-fc.github.io/puff.ics" target="_blank" rel="noopener">Añadir al calendario</a><a href="https://puff-fc.github.io/puff.ics" target="_blank" rel="noopener">o descárgalo</a></div>
     <p class="nota" style="margin:6px 0 0">Todos los partidos de Puff en tu calendario. Si cambia una fecha, se actualiza solo.</p></div>
   </div>`;
 }
