@@ -15,7 +15,7 @@
 <title>Diario Puff</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   /* Diario deportivo nerazzurro: azul y negro como el Inter, papel blanco, columnas densas. Un solo tema, a propósito. */
@@ -211,6 +211,59 @@ footer{font-size:12px;color:var(--gris);padding:0 0 30px}
 }
 @media (max-width:520px){.logo{font-size:34px}.cab-meta{text-align:left}.marcador .res{font-size:34px;padding:2px 10px}.marcador .eq{font-size:16px}}
 @media (prefers-reduced-motion:no-preference){.vista.activa{animation:entra .18s ease-out}@keyframes entra{from{opacity:.4}to{opacity:1}}}
+
+/* ---------- Acabado estilo Apple (24/11/2026): fuente del sistema, tarjetas redondeadas, sombras suaves, barra translúcida ---------- */
+:root{--fondo:#f2f2f7;--tinta:#1d1d1f;--gris:#6e6e73;--linea:rgba(60,60,67,.13);
+  --f-texto:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Segoe UI",Roboto,Arial,sans-serif;
+  --f-titular:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Segoe UI",Roboto,Arial,sans-serif}
+html,body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;line-height:1.47}
+.logo{font-family:"Oswald","Arial Narrow",Arial,sans-serif}
+h1,h2,h3{letter-spacing:-.015em}
+h1.titular{letter-spacing:-.025em;line-height:1.05}
+.grid,.col-izq,.col-der,.portada{gap:14px}
+.caja{border-top:0;border-radius:18px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(0,0,0,.05);padding:18px 18px 18px}
+.caja.roja{border-top:0}
+.caja.puff{background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.04),0 6px 20px rgba(11,79,174,.08);overflow:hidden;padding-top:24px}
+.caja.puff::before{height:5px}
+.sello{border-radius:6px;font-family:var(--f-texto);font-size:10.5px;font-weight:700;letter-spacing:.05em;padding:3px 8px}
+.antetitulo{font-family:var(--f-texto);font-weight:600;font-size:12.5px;letter-spacing:.04em}
+.sec-tit{border-bottom:0;padding-bottom:0;margin-bottom:10px}
+.sec-tit h2,details.desplegable>summary h2{text-transform:none;font-size:21px}
+details.desplegable>summary{border-bottom:0;padding-bottom:0}
+.entradilla{color:#424245}
+nav.menu{background:rgba(29,29,31,.86);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px)}
+nav.menu button{font-family:var(--f-texto);text-transform:none;letter-spacing:0;font-size:15px;font-weight:600}
+.tk{border-radius:9px}
+.marcador .eq{text-transform:none;font-weight:700;letter-spacing:-.01em}
+.marcador .res{border-radius:12px;letter-spacing:-.02em}
+.rc .m{text-transform:none;font-weight:700}
+.rc .m b{border-radius:8px}
+.cita{border-left-width:4px;border-radius:2px}
+.cita p{font-weight:700;font-size:20px;letter-spacing:-.015em}
+.cita footer{text-transform:none;letter-spacing:0;font-size:13.5px}
+th{font-family:var(--f-texto);font-size:11.5px;letter-spacing:.03em;border-bottom:1px solid var(--linea)}
+td{border-bottom:1px solid var(--linea)}
+tr:last-child td{border-bottom:0}
+tr.es-puff td{background:#eaf1fc}
+.f{border-radius:6px;font-family:var(--f-texto)}
+.cifra{border-left:0;padding:0}
+.cifra .v{font-family:var(--f-titular);letter-spacing:-.03em;font-size:32px}
+.chip{background:rgba(118,118,128,.12);border:0;font-weight:600;transition:background .15s}
+.chip:hover{background:rgba(118,118,128,.2)}
+.chip[aria-pressed="true"]{background:var(--tinta);color:#fff}
+.btn{border-radius:980px;text-transform:none;letter-spacing:0;font-family:var(--f-texto);font-weight:600;font-size:15px;padding:10px 20px}
+.conviene,.aviso{border-radius:12px}
+.conviene{border-left:0}
+.datos dt{font-family:var(--f-texto);font-size:12px;letter-spacing:.03em}
+.barra{border-radius:4px}
+@media (max-width:860px){
+  .cab{background:#0d1420}
+  .tabbar{background:rgba(13,20,32,.84);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid rgba(255,255,255,.12)}
+  .tabbar button{font-family:var(--f-texto);text-transform:none;letter-spacing:0;font-size:10.5px;font-weight:500}
+  .instalar{border-radius:16px;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);background:rgba(255,255,255,.94)}
+  .instalar b{font-family:var(--f-texto);text-transform:none;letter-spacing:0;font-size:15px}
+  .caja{border-radius:16px;padding:16px}
+}
 </style>
 </head>
 <body>
