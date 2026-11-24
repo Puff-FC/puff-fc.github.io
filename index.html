@@ -804,7 +804,7 @@ if(!enMarco&&"serviceWorker" in navigator&&location.protocol==="https:"){
   const pie=document.getElementById("pie");
   OneSignalDeferred.push(async OS=>{
     const estado=t=>{let el=document.getElementById("avisos-estado");if(!el){el=document.createElement("p");el.id="avisos-estado";el.className="nota";pie.appendChild(el)}el.textContent=t};
-    try{await OS.init({appId:APP,safari_web_id:"web.onesignal.auto.3145fc89-5d6b-4727-99ef-e9ab80472582",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{autoPrompt:false}})}catch(e){estado("Avisos: error al arrancar ("+(e&&e.message||e)+")");return}
+    try{await OS.init({appId:APP,safari_web_id:"web.onesignal.auto.3145fc89-5d6b-4727-99ef-e9ab80472582",serviceWorkerPath:"sw.js",serviceWorkerParam:{scope:"/"},notifyButton:{enable:false},promptOptions:{autoPrompt:false},welcomeNotification:{disable:false,title:"Bienvenido al Diario Puff FC",message:"Aquí te llegan antes que a nadie las exclusivas del mejor club del mundo.",url:"https://puff-fc.github.io"}})}catch(e){estado("Avisos: error al arrancar ("+(e&&e.message||e)+")");return}
     if(!OS.Notifications.isPushSupported()){const st=window.matchMedia("(display-mode: standalone)").matches||navigator.standalone;estado(st?"Avisos: este móvil no los admite (en iPhone hace falta iOS 16.4 o más)":"Avisos: abre la app desde el icono de la pantalla de inicio para activarlos");return}
     const idc=()=>{const i=OS.User.PushSubscription.id;return i?" (ref. "+i.slice(0,8)+")":" (sin registrar en el servidor)"};
     /* Si el móvil ya dio permiso pero la suscripción no llegó al servidor, se reintenta sola al abrir */
