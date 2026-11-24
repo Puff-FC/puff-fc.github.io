@@ -578,11 +578,12 @@ function vJugadores(){
   const rank=(L,cols,vacio)=>L.length?`<div class="tabla-wrap"><table class="rank"><thead><tr><th>#</th><th class="izq">Jugador</th>${cols.map(c=>`<th>${c[0]}</th>`).join("")}</tr></thead><tbody>${L.map((j,i)=>`<tr class="${cols[0][1](j)===cols[0][1](L[0])?"lider":""}"><td class="pos">${i>0&&cols[0][1](j)===cols[0][1](L[i-1])?"":i+1}</td><td class="izq"><button class="chip" data-jug="${esc(j.n)}" style="padding:2px 9px">${esc(j.n)}</button></td>${cols.map(c=>`<td>${c[1](j)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`:`<p class="nota">${vacio}</p>`;
   const top=(k,f)=>JUG.filter(j=>j.s[k]>0&&(!f||f(j))).sort((a,b)=>b.s[k]-a.s[k]||a.s.pj-b.s.pj||a.n.localeCompare(b.n)).slice(0,5);
   const gol=top("g"),asi=top("a");
-  const por=JUG.filter(j=>esPortero(j)&&j.s.partes>0).sort((a,b)=>a.s.gepp-b.s.gepp||b.s.partes-a.s.partes);
+  const MINPJ=2;
+  const por=JUG.filter(j=>j.s.pj>=MINPJ&&j.s.gepp!=null).sort((a,b)=>a.s.gepp-b.s.gepp||b.s.pj-a.s.pj||a.n.localeCompare(b.n)).slice(0,5);
   const ranking=`<div class="grid g3" style="margin-bottom:16px">
    <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Máximos goleadores</p>${rank(gol,[["Goles",j=>j.s.g],["PJ",j=>j.s.pj]],"Sin goles todavía.")}</div>
    <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Máximos asistentes</p>${rank(asi,[["Asist.",j=>j.s.a],["PJ",j=>j.s.pj]],"Sin asistencias todavía.")}</div>
-   <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Porteros: goles encajados por partido</p>${rank(por,[["GE/PJ",j=>fmt(j.s.gepp,2)],["Partidos",j=>fmt(j.s.partes)],["GE",j=>fmt(j.s.ge)]],"Sin datos de portería.")}<p class="nota" style="margin:8px 0 0">Menos es mejor. Cada parte en portería cuenta como medio partido.</p></div>
+   <div class="caja puff"><span class="sello">Puff FC</span><p class="antetitulo">Menos goles encajados por partido</p>${rank(por,[["GE/PJ",j=>fmt(j.s.gepp,2)],["PJ",j=>j.s.pj],["GE",j=>fmt(j.s.ge)]],"Sin datos todavía.")}<p class="nota" style="margin:8px 0 0">Goles que entran con el jugador en pista, menos es mejor. Mínimo ${MINPJ} partidos. A los porteros solo se les cuentan los de sus partes y el ratio va por partido completo en portería.</p></div>
   </div>`;
   return `${ranking}<div id="ficha-jug">${fichaJugador(jugSel)}</div>
    <details class="caja roja desplegable" id="det-tabla" style="margin-top:16px"><summary><h2>La plantilla en números</h2><span class="nota">Toca para ver la tabla de todos</span></summary>
