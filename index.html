@@ -676,8 +676,8 @@ function vJugadores(){
     if(typeof a==="string")return ordenJug.dir*a.localeCompare(b);return ordenJug.dir*(((a==null?-1:a))-((b==null?-1:b)))||x.n.localeCompare(y.n)});
   const val=(j,k)=>{const v=k==="n"?j.n:k==="pos"?j.pos:j.s[k];if(k==="gapp"||k==="gepp")return j.s.pj?fmt(v,2):"-";if(k==="p0"||k==="ge")return fmt(v,1);return v};
   if(!jugSel){const g=lider("ga");jugSel=g?g.quien[0]:JUG[0].n;}
-  const cromos=`<div class="caja puff cromos"><span class="sello">Puff FC</span><p class="antetitulo">Cromos ${esc(A.temporada)}</p>
-   <h2>El álbum de la temporada</h2><p class="nota" style="margin:6px 0 0">Toca un jugador para ver su cromo y su ficha.</p>
+  const cromos=`<div class="caja puff cromos"><span class="sello">Puff FC</span><p class="antetitulo">Puff FC ${esc(A.temporada)}</p>
+   <h2>La plantilla</h2><p class="nota" style="margin:6px 0 0">Toca un jugador para ver su ficha.</p>
    <div class="album casillas" role="group" aria-label="Elegir jugador">${JUG.map(x=>`<button class="casilla${x.n===jugSel?" sel":""}" data-jug="${esc(x.n)}" aria-pressed="${x.n===jugSel}"><span class="cromo-ins">${insHTML(x.n)}</span><span class="cas-num">${esc(DORSAL[x.n]||"")}</span><span class="cas-n">${esc(x.n)}</span></button>`).join("")}</div><p class="nota" style="margin:10px 0 0">⚽ Máximo goleador · 🎯 Máximo asistente · 🧤 Menos goles encajados por partido · 🟨 Más tarjetas</p></div>`;
   return `${cromos}<div id="ficha-jug" style="margin-top:14px">${fichaJugador(jugSel)}</div>
    <details class="caja roja desplegable" id="det-tabla" style="margin-top:16px"><summary><h2>La plantilla en números</h2><span class="nota">Toca para ver la tabla de todos</span></summary>
